@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>战术选择助手</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .player {
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      padding: 15px;
+    }
+    .results {
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>战术选择助手</h1>
+
+<div id="player1" class="player">
+  <h2>中后卫1</h2>
+  站位：<input type="number" class="positioning" min="1" max="20">
+  预判：<input type="number" class="anticipation" min="1" max="20">
+  决策：<input type="number" class="decisions" min="1" max="20">
+  速度：<input type="number" class="pace" min="1" max="20">
+  加速度：<input type="number" class="acceleration" min="1" max="20">
+  抢断：<input type="number" class="tackling" min="1" max="20">
+  盯人：<input type="number" class="marking" min="1" max="20">
+  头球：<input type="number" class="heading" min="1" max="20">
+  跳跃力：<input type="number" class="jumping" min="1" max="20">
+  力量：<input type="number" class="strength" min="1" max="20">
+  勇敢：<input type="number" class="bravery" min="1" max="20">
+  专注：<input type="number" class="concentration" min="1" max="20">
+  敏捷性：<input type="number" class="agility" min="1" max="20">
+</div>
+
+<div id="player2" class="player">
+  <h2>中后卫2</h2>
+  站位：<input type="number" class="positioning" min="1" max="20">
+  预判：<input type="number" class="anticipation" min="1" max="20">
+  决策：<input type="number" class="decisions" min="1" max="20">
+  速度：<input type="number" class="pace" min="1" max="20">
+  加速度：<input type="number" class="acceleration" min="1" max="20">
+  抢断：<input type="number" class="tackling" min="1" max="20">
+  盯人：<input type="number" class="marking" min="1" max="20">
+  头球：<input type="number" class="heading" min="1" max="20">
+  跳跃力：<input type="number" class="jumping" min="1" max="20">
+  力量：<input type="number" class="strength" min="1" max="20">
+  勇敢：<input type="number" class="bravery" min="1" max="20">
+  专注：<input type="number" class="concentration" min="1" max="20">
+  敏捷性：<input type="number" class="agility" min="1" max="20">
+</div>
+
+<div id="player3" class="player">
+  <h2>中后卫3</h2>
+  站位：<input type="number" class="positioning" min="1" max="20">
+  预判：<input type="number" class="anticipation" min="1" max="20">
+  决策：<input type="number" class="decisions" min="1" max="20">
+  速度：<input type="number" class="pace" min="1" max="20">
+  加速度：<input type="number" class="acceleration" min="1" max="20">
+  抢断：<input type="number" class="tackling" min="1" max="20">
+  盯人：<input type="number" class="marking" min="1" max="20">
+  头球：<input type="number" class="heading" min="1" max="20">
+  跳跃力：<input type="number" class="jumping" min="1" max="20">
+  力量：<input type="number" class="strength" min="1" max="20">
+  勇敢：<input type="number" class="bravery" min="1" max="20">
+  专注：<input type="number" class="concentration" min="1" max="20">
+  敏捷性：<input type="number" class="agility" min="1" max="20">
+</div>
+
+<button onclick="calculate()">计算</button>
+
+<div class="results">
+  <h2>计算结果:</h2>
+  <p>前锋跑空挡接直塞：<span id="result1"></span></p>
+  <p>两边传中头球：<span id="result2"></span></p>
+  <p>持球突破射门：<span id="result3"></span></p>
+  <p>推荐战术：<span id="recommended"></span></p>
+</div>
+
+<script>
+  function calculate() {
+    // 玩家数组
+    let players = [document.getElementById('player1'), document.getElementById('player2'), document.getElementById('player3')];
+
+    let total1 = 0, total2 = 0, total3 = 0;
+    let count = 0;
+
+    for (let player of players) {
+      if (player.querySelector('.positioning').value) { // 如果第一个属性有值，认为这个中后卫是填写了数据的
+        count++;
+        let positioning = parseFloat(player.querySelector('.positioning').value);
+        let anticipation = parseFloat(player.querySelector('.anticipation').value);
+        let decisions = parseFloat(player.querySelector('.decisions').value);
+        let pace = parseFloat(player.querySelector('.pace').value);
+        let acceleration = parseFloat(player.querySelector('.acceleration').value);
+        let tackling = parseFloat(player.querySelector('.tackling').value);
+        let marking = parseFloat(player.querySelector('.marking').value);
+        let heading = parseFloat(player.querySelector('.heading').value);
+        let jumping = parseFloat(player.querySelector('.jumping').value);
+        let strength = parseFloat(player.querySelector('.strength').value);
+        let bravery = parseFloat(player.querySelector('.bravery').value);
+        let concentration = parseFloat(player.querySelector('.concentration').value);
+        let agility = parseFloat(player.querySelector('.agility').value);
+
+        // 计算每种战术得分
+        total1 += (0.250 * positioning) + (0.230 * anticipation) + (0.210 * decisions) + (0.180 * pace) + (0.100 * acceleration) + (0.030 * tackling);
+        total2 += (0.280 * heading) + (0.240 * marking) + (0.220 * jumping) + (0.140 * strength) + (0.070 * bravery) + (0.050 * concentration);
+        total3 += (0.260 * tackling) + (0.240 * pace) + (0.210 * acceleration) + (0.140 * agility) + (0.090 * positioning) + (0.060 * strength);
+      }
+    }
+
+    // 计算平均值
+    let avg1 = total1 / count;
+    let avg2 = total2 / count;
+    let avg3 = total3 / count;
+
+    document.getElementById('result1').textContent = avg1.toFixed(2);
+    document.getElementById('result2').textContent = avg2.toFixed(2);
+    document.getElementById('result3').textContent = avg3.toFixed(2);
+
+    // 推荐战术
+    let max = Math.min(avg1, avg2, avg3);
+    document.getElementById('recommended').textContent = max === avg1 ? "前锋跑空挡接直塞" : (max === avg2 ? "两边传中头球" : "持球突破射门");
+  }
+</script>
+</body>
+</html>
